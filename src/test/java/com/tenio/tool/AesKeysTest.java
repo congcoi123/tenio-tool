@@ -22,8 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package com.tenio.tool.crypto;
+package com.tenio.tool;
 
+import com.tenio.tool.crypto.AesKeysHelper;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -32,24 +33,24 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class AesKeysTest {
+public final class AesKeysTest {
 
   public static void main(String[] args)
       throws NoSuchAlgorithmException, IOException,
       IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
-    AesKeysUtility aesKeysUtility = AesKeysUtility.INSTANCE;
+    AesKeysHelper aesKeysHelper = new AesKeysHelper();
 
-    aesKeysUtility.generateSymmetricKey("/Users/kong/Desktop/symmetric.key");
+    aesKeysHelper.generateSymmetricKey("/Users/kong/Desktop/symmetric.key");
 
-    SecretKey symmetric = aesKeysUtility.getKey("/Users/kong/Desktop/symmetric.key");
+    SecretKey symmetric = aesKeysHelper.getKey("/Users/kong/Desktop/symmetric.key");
 
-    aesKeysUtility.initialize(symmetric);
+    aesKeysHelper.initialize(symmetric);
 
     String originText = "Hello World";
     System.out.println("Origin Text: " + originText);
-    String encryptedText = aesKeysUtility.encryptText(originText);
+    String encryptedText = aesKeysHelper.encryptText(originText);
     System.out.println("Encrypted Text: " + encryptedText);
-    String decryptedText = aesKeysUtility.decryptText(encryptedText);
+    String decryptedText = aesKeysHelper.decryptText(encryptedText);
     System.out.println("Decrypted Text: " + decryptedText);
   }
 }

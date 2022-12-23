@@ -22,8 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package com.tenio.tool.crypto;
+package com.tenio.tool;
 
+import com.tenio.tool.crypto.RsaKeysHelper;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -34,26 +35,26 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-public class RsaKeysTest {
+public final class RsaKeysTest {
 
   public static void main(String[] args)
       throws NoSuchAlgorithmException, IOException, InvalidKeySpecException,
       IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
-    RsaKeysUtility rsaKeysUtility = RsaKeysUtility.INSTANCE;
+    RsaKeysHelper rsaKeysHelper = new RsaKeysHelper();
 
-    rsaKeysUtility.generateKeyPair("/Users/kong/Desktop/public.key", "/Users/kong/Desktop/private" +
+    rsaKeysHelper.generateKeyPair("/Users/kong/Desktop/public.key", "/Users/kong/Desktop/private" +
         ".key");
 
-    PublicKey publicKey = rsaKeysUtility.getPublicKey("/Users/kong/Desktop/public.key");
-    PrivateKey privateKey = rsaKeysUtility.getPrivateKey("/Users/kong/Desktop/private.key");
+    PublicKey publicKey = rsaKeysHelper.getPublicKey("/Users/kong/Desktop/public.key");
+    PrivateKey privateKey = rsaKeysHelper.getPrivateKey("/Users/kong/Desktop/private.key");
 
-    rsaKeysUtility.initialize(publicKey, privateKey);
+    rsaKeysHelper.initialize(publicKey, privateKey);
 
     String originText = "Hello World";
     System.out.println("Origin Text: " + originText);
-    String encryptedText = rsaKeysUtility.encryptText(originText);
+    String encryptedText = rsaKeysHelper.encryptText(originText);
     System.out.println("Encrypted Text: " + encryptedText);
-    String decryptedText = rsaKeysUtility.decryptText(encryptedText);
+    String decryptedText = rsaKeysHelper.decryptText(encryptedText);
     System.out.println("Decrypted Text: " + decryptedText);
   }
 }

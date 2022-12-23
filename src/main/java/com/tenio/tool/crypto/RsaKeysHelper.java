@@ -47,8 +47,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-public enum RsaKeysUtility {
-  INSTANCE;
+public class RsaKeysHelper {
 
   private Cipher encryptCipher;
   private Cipher decryptCipher;

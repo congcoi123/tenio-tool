@@ -41,8 +41,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public enum AesKeysUtility {
-  INSTANCE;
+public class AesKeysHelper {
 
   private Cipher encryptCipher;
   private Cipher decryptCipher;
