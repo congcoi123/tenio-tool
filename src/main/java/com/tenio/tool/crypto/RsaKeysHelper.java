@@ -91,15 +91,19 @@ public class RsaKeysHelper {
     return keyFactory.generatePrivate(privateKeySpec);
   }
 
-  public void initialize(PublicKey publicKey, PrivateKey privateKey)
+  public void initialize(PublicKey publicKey, PrivateKey privateKey, Runnable initialAction)
       throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
-    encryptCipher = Cipher.getInstance("RSA");
-    encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+    if (publicKey != null) {
+      encryptCipher = Cipher.getInstance("RSA");
+      encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
+    }
 
-    decryptCipher = Cipher.getInstance("RSA");
-    decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+    if (privateKey != null) {
+      decryptCipher = Cipher.getInstance("RSA");
+      decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+    }
 
-    System.out.println("KeyPair loaded");
+    initialAction.run();
   }
 
   public String encryptText(String text) throws IllegalBlockSizeException, BadPaddingException {

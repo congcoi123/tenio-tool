@@ -44,7 +44,7 @@ public final class AesKeysTest {
 
     SecretKey symmetric = aesKeysHelper.getKey("/Users/kong/Desktop/symmetric.key");
 
-    aesKeysHelper.initialize(symmetric);
+    aesKeysHelper.initialize(symmetric, () -> {});
 
     String originText = "Hello World";
     System.out.println("Origin Text: " + originText);

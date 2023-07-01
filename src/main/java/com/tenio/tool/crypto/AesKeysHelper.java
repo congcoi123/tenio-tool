@@ -66,7 +66,7 @@ public class AesKeysHelper {
     return new SecretKeySpec(keyBytes, "AES");
   }
 
-  public void initialize(SecretKey key)
+  public void initialize(SecretKey key, Runnable initialAction)
       throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
     encryptCipher = Cipher.getInstance("AES");
     encryptCipher.init(Cipher.ENCRYPT_MODE, key);
@@ -74,7 +74,7 @@ public class AesKeysHelper {
     decryptCipher = Cipher.getInstance("AES");
     decryptCipher.init(Cipher.DECRYPT_MODE, key);
 
-    System.out.println("Symmetric Key loaded");
+    initialAction.run();
   }
 
   public String encryptText(String text) throws IllegalBlockSizeException, BadPaddingException {

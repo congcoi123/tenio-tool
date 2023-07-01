@@ -48,7 +48,7 @@ public final class RsaKeysTest {
     PublicKey publicKey = rsaKeysHelper.getPublicKey("/Users/kong/Desktop/public.key");
     PrivateKey privateKey = rsaKeysHelper.getPrivateKey("/Users/kong/Desktop/private.key");
 
-    rsaKeysHelper.initialize(publicKey, privateKey);
+    rsaKeysHelper.initialize(publicKey, privateKey, () -> {});
 
     String originText = "Hello World";
     System.out.println("Origin Text: " + originText);
