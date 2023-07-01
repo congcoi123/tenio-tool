@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 package com.tenio.tool.crypto;
 
+import com.google.common.io.BaseEncoding;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -41,7 +42,6 @@ import java.security.spec.EncodedKeySpec;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -94,12 +94,12 @@ public class RsaKeysHelper {
   public void initialize(PublicKey publicKey, PrivateKey privateKey, Runnable initialAction)
       throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
     if (publicKey != null) {
-      encryptCipher = Cipher.getInstance("RSA");
+      encryptCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
       encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
     }
 
     if (privateKey != null) {
-      decryptCipher = Cipher.getInstance("RSA");
+      decryptCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
       decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
     }
 
@@ -108,16 +108,16 @@ public class RsaKeysHelper {
 
   public String encryptText(String text) throws IllegalBlockSizeException, BadPaddingException {
     byte[] cipherText = encryptCipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
-    return Base64.getEncoder().encodeToString(cipherText);
+    return BaseEncoding.base64().encode(cipherText);
   }
 
   public String decryptText(String text) throws IllegalBlockSizeException, BadPaddingException {
-    byte[] plainText = decryptCipher.doFinal(Base64.getDecoder().decode(text));
+    byte[] plainText = decryptCipher.doFinal(BaseEncoding.base64().decode(text));
     return new String(plainText);
   }
 
   private String keyToString(Key key) {
     byte[] keyBytes = key.getEncoded();
-    return Base64.getEncoder().encodeToString(keyBytes);
+    return BaseEncoding.base64().encode(keyBytes);
   }
 }
